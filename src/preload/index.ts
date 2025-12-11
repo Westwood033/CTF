@@ -1,4 +1,4 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
@@ -10,7 +10,10 @@ const api = {}
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld("api", {
+      getUserByPseudoAndByPassword: (pseudo: string, password: string) => ipcRenderer.invoke("get-user-by-pseudo-and-password", pseudo, password),
+      createUser: (pseudo: string, password: string) => ipcRenderer.invoke("create-user", pseudo, password)
+    });
   } catch (error) {
     console.error(error)
   }
@@ -20,3 +23,4 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.api = api
 }
+

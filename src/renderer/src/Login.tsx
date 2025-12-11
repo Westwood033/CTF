@@ -1,47 +1,66 @@
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
-
 type LoginProps = {
-  onLoginSuccess: () => void; // Fonction venant du parent
+  onLoginSuccess: () => void;
 };
 
-function checkLogin(({ onLoginSuccess }: LoginProps, {pseudo, password}) => {
-     if (pseudo === 'admin' && password === '1234') {
-              onLoginSuccess();
-            } else {
-              alert('Identifiant ou mot de passe incorrect');
-            }
-});
+function checkLogin({ onLoginSuccess }: LoginProps,
+                    { pseudo, password }: { pseudo: string; password: string }) {
 
-function Login({onLoginSuccess }: LoginProps): React.JSX.Element {
+
+  window.api.getUserByPseudoAndByPassword(pseudo, password).then((user: User | undefined) => {
+    if(user){
+        onLoginSuccess();
+    } else {
+      alert("Identifiant ou mot de passe incorrect");
+    }
+  });
+}
+
+
+function Login({ onLoginSuccess }: LoginProps): React.JSX.Element {
   return (
-    <>
-      <div className="login-form">
-        <h2>Connexion</h2>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
+    
+    <div
+      className="d-flex vh-100 w-100 align-items-center justify-content-center bg-dark bg-opacity-50">
+      <form
+        className="d-flex flex-column text-center border rounded p-5 bg-dark bg-opacity-75"
+        style={{ minWidth: "350px" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          const form = e.target as HTMLFormElement;
+          const pseudo = (form.elements.namedItem("identifiant") as HTMLInputElement).value;
+          const password = (form.elements.namedItem("motDePasse") as HTMLInputElement).value;
+          checkLogin({ onLoginSuccess }, { pseudo, password });
+        }}
+      >
+        <h3 className="mb-3 text-light">Connexion</h3>
 
-            const form = e.target as HTMLFormElement;
-            const pseudo = (form.elements.namedItem('identifiant') as HTMLInputElement).value;
-            const password = (form.elements.namedItem('motDePasse') as HTMLInputElement).value;
-            checkLogin({onLoginSuccess}, {pseudo, password});
-          }}
-        >
-          <div className="form-group">
-            <label htmlFor="identifiant">Identifiant</label>
-            <input type="text" name="identifiant" id="identifiant" required />
-          </div>
+        <label className="text-light">Identifiant</label>
+        <input
+          type="text"
+          name="identifiant"
+          className="form-control mb-3 mt-2"
+          placeholder="Identifiant"
+          required
+        />
 
-          <div className="form-group">
-            <label htmlFor="motDePasse">Mot de passe</label>
-            <input type="password" name="motDePasse" id="motDePasse" required />
-          </div>
+        <label className="text-light">Mot de passe</label>
+        <input
+          type="password"
+          name="motDePasse"
+          className="form-control mb-3 mt-2"
+          placeholder="Mot de passe"
+          required
+        />
 
-          <button type="submit">Se connecter</button>
-        </form>
-      </div>
-    </>
+        <button type="submit" className="btn btn-primary btn-lg w-100 mt-3">
+          Se connecter
+        </button>
+
+        <a href="#" className="text-light mt-3">
+          Vous n'avez pas de compte ? Inscrivez-vous !
+        </a>
+      </form>
+    </div>
   );
 }
 

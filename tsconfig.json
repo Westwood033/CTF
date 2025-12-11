@@ -1,4 +1,8 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }],
+  "include": [
+    "src/**/*",      // tout ton front
+    "main/**/*",     // tout ton code Electron
+    "src/global.d.ts" // déclaration globale
+  ]
 }
