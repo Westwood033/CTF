@@ -22,7 +22,7 @@ const handleOpenDevTools = () => {
 
 function Register({ goToLogin }: RegisterProps): React.JSX.Element {
   return (
-    <div className="text-body bg-body d-flex p-0 m-0 vh-100 w-100 position-relative">
+    <div className="text-body d-flex p-0 m-0 vh-100 w-100 position-relative">
       
       {/* Bouton en haut à droite */}
       <button
@@ -39,6 +39,7 @@ function Register({ goToLogin }: RegisterProps): React.JSX.Element {
         {/* Formulaire collé à gauche */}
         <form
           className="w-50 h-100 d-flex flex-column text-center border-end justify-content-center align-items-center bg-dark"
+          style={{ minWidth: "350px" }}
           onSubmit={(e) => {
             e.preventDefault();
             const form = e.target as HTMLFormElement;

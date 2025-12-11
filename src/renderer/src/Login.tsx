@@ -6,8 +6,6 @@ type LoginProps = {
 function checkLogin({ onLoginSuccess }: LoginProps,
                     { pseudo, password }: { pseudo: string; password: string }) {
 
-  console.log(`pseudo récupéré : ${pseudo}`);
-  console.log("pseudo attendu : root");
   window.api.getUserByPseudoAndByPassword(pseudo, password).then((user: User | undefined) => {
     if(user){
         onLoginSuccess();
@@ -41,7 +39,7 @@ function Login({ onLoginSuccess, goToRegister}: LoginProps): React.JSX.Element {
           type="text"
           name="identifiant"
           className="form-control mb-3 mt-2"
-          placeholder="Identifiant"
+          placeholder="Identifiant (ex: root)"
           required
         />
 
