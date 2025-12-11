@@ -1,0 +1,50 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build React
+/build/
+dist/
+*.cache
+.cache/
+.cache-loader/
+
+# Electron build artifacts
+/out/
+/release/
+*.asar
+
+# Electron forge / builder
+/.webpack/
+electron-builder.yml
+electron-builder.json
+*.temp
+
+# Logs
+logs/
+*.log
+log.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+.env.production
+.env.development
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+coverage/
+*.tsbuildinfo
