@@ -12,7 +12,8 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld("api", {
       getUserByPseudoAndByPassword: (pseudo: string, password: string) => ipcRenderer.invoke("get-user-by-pseudo-and-password", pseudo, password),
-      createUser: (pseudo: string, password: string) => ipcRenderer.invoke("create-user", pseudo, password)
+      createUser: (pseudo: string, password: string) => ipcRenderer.invoke("create-user", pseudo, password),
+      openDevTool: () => ipcRenderer.invoke("open-dev-tool")
     });
   } catch (error) {
     console.error(error)

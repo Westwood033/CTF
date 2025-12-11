@@ -1,5 +1,6 @@
 type LoginProps = {
   onLoginSuccess: () => void;
+  goToRegister: () => void;
 };
 
 function checkLogin({ onLoginSuccess }: LoginProps,
@@ -17,12 +18,11 @@ function checkLogin({ onLoginSuccess }: LoginProps,
 }
 
 
-function Login({ onLoginSuccess }: LoginProps): React.JSX.Element {
+function Login({ onLoginSuccess, goToRegister}: LoginProps): React.JSX.Element {
   return (
     
     <div
       className="d-flex vh-100 w-100 align-items-center justify-content-center">
-
       <form
         className="d-flex flex-column text-center border rounded p-5 bg-dark"
         style={{ minWidth: "350px" }}
@@ -58,7 +58,11 @@ function Login({ onLoginSuccess }: LoginProps): React.JSX.Element {
           Se connecter
         </button>
 
-        <a href="#" className="text-light mt-3">
+        <a href="#" className="text-light mt-3"
+        onClick={(e) => {
+          e.preventDefault();   // évite le scroll/reload
+          goToRegister();
+        }}>
           Vous n'avez pas de compte ? Inscrivez-vous !
         </a>
       </form>

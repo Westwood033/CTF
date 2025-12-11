@@ -24,6 +24,10 @@ function createWindow(): void {
     mainWindow.show()
   })
 
+  ipcMain.handle("open-dev-tool", (event) => {
+    mainWindow.webContents.openDevTools();
+});
+
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
