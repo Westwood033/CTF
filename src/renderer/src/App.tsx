@@ -32,7 +32,8 @@ function App({ goToMorpion }: AppProps): React.JSX.Element {
 
   return (
     <div style={styles.page}>
-      <h1 style={{ textAlign: "center" }}>Mes Cards</h1>
+
+      <h1 style={{ textAlign: "center" }}>Mini-jeux</h1>
 
       <div style={styles.grid}>
         {cards.map(card => (

@@ -11,19 +11,19 @@ function Root() {
   const [page, setPage] = useState<'login' | 'app' | 'register' | 'morpion'>('login')
 
   const handleLoginSuccess = () => {
-    setPage('app') // après connexion, on passe à App
+    setPage('app')
   }
 
   const handleChangeToLogin = () => {
-    setPage('login') // après connexion, on passe à App
+    setPage('login')
   }
 
   const handleChangeToRegister = () => {
-    setPage('register') // après connexion, on passe à App
+    setPage('register')
   }
 
   const handleChangeToMorpion = () => {
-    setPage('morpion') // après connexion, on passe à App
+    setPage('morpion')
   }
 
   return (
