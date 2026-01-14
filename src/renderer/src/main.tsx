@@ -3,11 +3,12 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import Login from './Login'
 import Register from './Register'
+import Morpion from './Morpion'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function Root() {
-  const [page, setPage] = useState<'login' | 'app' | 'register'>('login')
+  const [page, setPage] = useState<'login' | 'app' | 'register' | 'morpion'>('login')
 
   const handleLoginSuccess = () => {
     setPage('app') // après connexion, on passe à App
@@ -21,11 +22,16 @@ function Root() {
     setPage('register') // après connexion, on passe à App
   }
 
+  const handleChangeToMorpion = () => {
+    setPage('morpion') // après connexion, on passe à App
+  }
+
   return (
     <>
       {page === 'login' && <Login onLoginSuccess={handleLoginSuccess} goToRegister={handleChangeToRegister} />}
-      {page === 'app' && <App />}
+      {page === 'app' && <App goToMorpion={handleChangeToMorpion} />}
       {page === 'register' && <Register goToLogin={handleChangeToLogin} />}
+      {page === 'morpion' && <Morpion goToApp={handleLoginSuccess}/>}
     </>
   )
 }

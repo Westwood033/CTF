@@ -7,6 +7,7 @@ function checkRegister({ goToLogin }: RegisterProps,
 
   window.api.createUser(pseudo, password).then((user: User | undefined) => {
     if(user){
+      // donner un trophé ici
         goToLogin();
     } else {
       alert("Impossible de créer l'utilisateur");
@@ -26,17 +27,16 @@ function Register({ goToLogin }: RegisterProps): React.JSX.Element {
       
       {/* Bouton en haut à droite */}
       <button
-        className="btn btn-info position-absolute"
+        className="btn btn-primary position-absolute"
         style={{ top: "1rem", right: "1rem", zIndex: 10 }}
         onClick={() => {
           handleOpenDevTools();
         }}
       >
-        Ouvrir la console
+        Console
       </button>
 
       <div className="container-fluid p-0 m-0 h-100 d-flex">
-        {/* Formulaire collé à gauche */}
         <form
           className="w-50 h-100 d-flex flex-column text-center border-end justify-content-center align-items-center bg-dark"
           style={{ minWidth: "350px" }}
@@ -50,7 +50,7 @@ function Register({ goToLogin }: RegisterProps): React.JSX.Element {
         >
           <h3 className="mb-3 text-light">Inscription</h3>
 
-          {/* Wrapper pour réduire la largeur visuelle des champs */}
+
           <div className="container" style={{ maxWidth: "400px" }}>
             <label className="text-light w-100 mb-1">Identifiant</label>
             <input
