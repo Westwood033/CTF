@@ -16,7 +16,6 @@ function checkRegister({ goToLogin }: RegisterProps,
 }
 
 const handleOpenDevTools = () => {
-    // envoyer un message au main process
     window.api.openDevTool();
   };
 

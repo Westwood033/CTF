@@ -3,6 +3,8 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import {createUser, getUserByPseudoAndPassword} from "./user";
+import {confirmFlag, getFlagByNumber} from "./flag";
+import {verify} from "./file";
 
 function createWindow(): void {
   // Create the browser window.
@@ -85,5 +87,20 @@ ipcMain.handle("get-user-by-pseudo-and-password", (event, pseudo: string, passwo
 ipcMain.handle("create-user", (event, pseudo: string, password: string) => {
   const user = createUser(pseudo, password);
   return user;
+});
+
+ipcMain.handle("verify",(event, flag: string, id: number) => {
+  const v = verify(flag, id);
+  return v;
+});
+
+ipcMain.handle("confirm",(event, id: number, flag: string) => {
+  const c = confirmFlag(id, flag);
+  return c;
+});
+
+ipcMain.handle("get-flag-by-number",(event, id: number) => {
+  const f = getFlagByNumber(id);
+  return f;
 });
 

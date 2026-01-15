@@ -4,34 +4,38 @@ type MorpionProps = {
   goToApp: () => void;
 };
 
-function Morpion({goToApp}: MorpionProps): React.JSX.Element {
+function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
 
- useEffect(() => {
-  if (player !== 2) return;
+  // ⭐ POPUP STATE
+  const [showModal, setShowModal] = useState(false);
+  const [flag, setFlag] = useState("");
 
-  const timer = setTimeout(() => {
-    const emptyCells: [number, number][] = [];
+  useEffect(() => {
+    if (player !== 2 || showModal) return;
 
-    for (let i = 0; i < grille.length; i++) {
-      for (let j = 0; j < grille[i].length; j++) {
-        if (grille[i][j] === 0) {
-          emptyCells.push([i, j]);
+    const timer = setTimeout(() => {
+      const emptyCells: [number, number][] = [];
+
+      for (let i = 0; i < grille.length; i++) {
+        for (let j = 0; j < grille[i].length; j++) {
+          if (grille[i][j] === 0) {
+            emptyCells.push([i, j]);
+          }
         }
       }
-    }
 
-    if (emptyCells.length === 0) return;
+      if (emptyCells.length === 0) return;
 
-    const randomIndex = Math.floor(Math.random() * emptyCells.length);
-    const [i, j] = emptyCells[randomIndex];
+      const randomIndex = Math.floor(Math.random() * emptyCells.length);
+      const [i, j] = emptyCells[randomIndex];
 
-    play(i, j);
-  }, 1000);
+      play(i, j);
+    }, 1000);
 
-  return () => clearTimeout(timer);
-});  
+    return () => clearTimeout(timer);
+  });
 
- const [grille, setGrille] = useState([
+  const [grille, setGrille] = useState([
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
@@ -103,8 +107,15 @@ function Morpion({goToApp}: MorpionProps): React.JSX.Element {
     return false;
   };
 
-  const clean = (g, num) => g.map((row) => row.map((cell) => (cell === num ? cell : 0)));
-    
+  const clean = (g, num) =>
+    g.map((row) => row.map((cell) => (cell === num ? cell : 0)));
+
+  function getFlag() {
+    const parts = [113, 118, 98, 105, 66, 104, 87, 79, 112, 105, 68, 67, 50, 66, 104, 109];
+    return parts.map((c) => String.fromCharCode(c)).join("");
+  }
+
+
   const play = (i, j) => {
     setGrille((prev) => {
       if (prev[i][j] !== 0) return prev;
@@ -113,17 +124,23 @@ function Morpion({goToApp}: MorpionProps): React.JSX.Element {
       newGrid[i][j] = player;
 
       if (multiply(clean(newGrid, player), player)) {
-        alert(`${player === 1 ? "qvbiBhWOpiDC2Bhm" : "L'IA à gagné"}`);
-      }else{
+        if (player === 1) {
+          const f = getFlag();
+          setFlag(`Gagne contre le morpion : ${f}`);
+          setShowModal(true);
+        } else {
+          setFlag("L'IA a gagné");
+          setShowModal(true);
+        }
+      } else {
         setPlayer(player === 1 ? 2 : 1);
       }
-      
+
       return newGrid;
     });
   };
 
   return (
-    
     <div
       style={{
         display: "flex",
@@ -134,18 +151,18 @@ function Morpion({goToApp}: MorpionProps): React.JSX.Element {
         flexDirection: "column",
       }}
     >
-        <button
+      {/* 🔙 Bouton retour */}
+      <button
         className="btn btn-primary position-absolute"
         style={{ top: "1rem", left: "1rem", zIndex: 10 }}
-        onClick={() => {
-          goToApp();
-        }}
+        onClick={() => goToApp()}
       >
         Retour
       </button>
 
       <h1 style={{ marginBottom: "20px" }}>Morpion React</h1>
 
+      {/* 🎮 Grille */}
       <div
         style={{
           display: "grid",
@@ -182,9 +199,55 @@ function Morpion({goToApp}: MorpionProps): React.JSX.Element {
         )}
       </div>
 
-      <p style={{ marginTop: "20px" }}>Joueur actuel : {player === 1 ? "X" : "O"}</p>
+      <p style={{ marginTop: "20px" }}>
+        Joueur actuel : {player === 1 ? "X" : "O"}
+      </p>
+
+      {showModal && (
+        <div style={overlayStyle}>
+          <div style={modalStyle}>
+            <h2>Résultat</h2>
+
+            <p
+              style={{
+                background: "#f4f4f4",
+                padding: "10px",
+                borderRadius: "6px",
+                fontFamily: "monospace",
+                wordBreak: "break-all",
+              }}
+            >
+              {flag}
+            </p>
+
+            <div style={{ display: "flex", gap: "10px", marginTop: "15px", justifyContent: "center" }}>
+              <button onClick={() => setShowModal(false)}>Fermer</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+/* 🎨 Styles popup */
+const overlayStyle: React.CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.5)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 999,
+};
+
+const modalStyle: React.CSSProperties = {
+  background: "#fff",
+  padding: "25px",
+  borderRadius: "12px",
+  width: "320px",
+  textAlign: "center",
+  boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+};
 
 export default Morpion;

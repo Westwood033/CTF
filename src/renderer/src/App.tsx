@@ -3,6 +3,7 @@ import React from 'react'
 
 type AppProps = {
   goToMorpion: () => void;
+  goToFlagList: () => void;
 };
 
 function goToPage({ goToMorpion }: AppProps, idPage: number){
@@ -11,12 +12,24 @@ function goToPage({ goToMorpion }: AppProps, idPage: number){
       goToMorpion();
       break;
   }
-
 }
 
+function App({ goToMorpion, goToFlagList } : AppProps): React.JSX.Element {
 
+  /*const parts = [54, 86, 65, 109, 118, 53, 67, 66, 49, 119, 81, 101, 66, 76, 78, 90];
+  return parts.map((c) => String.fromCharCode(c)).join("");
+  6VAmv5CB1wQeBLNZ
+  f4310e03cf6b1c98a1ebd2c0d7eeb2f8d0e13b64a7a9050d6162d4df509c689b
+  */
 
-function App({ goToMorpion }: AppProps): React.JSX.Element {
+  /*const parts = [
+  78, 55, 97, 81, 120, 80, 50, 76,
+  109, 57, 90, 75, 99, 82, 56, 68
+];
+return parts.map(c => String.fromCharCode(c)).join("");
+N7aQxP2Lm9ZKcR8D
+c1b8f3c4c2b5f7f7c5b9c99e4d2b0f2c4f4b7c07b3f4f0e5e1b8f4d95d6a0c21
+*/
   const cards = [
     { id: 1, title: "Morpion", desc: "Rond contre croix, fait une ligne de trois", img: "./../src/assets/morpion.png" },
     { id: 2, title: "Puissance 4", desc: "Bleu contre rouge, fait une ligne de 4", img: "./../src/assets/puissance4.png" },
@@ -32,6 +45,16 @@ function App({ goToMorpion }: AppProps): React.JSX.Element {
 
   return (
     <div style={styles.page}>
+
+      <button
+        className="btn btn-primary position-absolute"
+        style={{ top: "1rem", right: "1rem", zIndex: 10 }}
+        onClick={() => {
+          goToFlagList();
+        }}
+      >
+        Remplis tes drapeaux
+      </button>
 
       <h1 style={{ textAlign: "center" }}>Mini-jeux</h1>
 

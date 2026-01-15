@@ -16,6 +16,14 @@ db.prepare(`
   )
 `).run();
 
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS flags (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    number INTEGER,
+    flag TEXT
+  )
+`).run();
+
 // Pré-remplir la base avec l'utilisateur root si il n'existe pas déjà
 const rootExists = db.prepare("SELECT * FROM users WHERE pseudo = ?").get("root");
 

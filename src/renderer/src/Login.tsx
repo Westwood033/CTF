@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 type LoginProps = {
   onLoginSuccess: () => void;
   goToRegister: () => void;
@@ -17,6 +19,8 @@ function checkLogin({ onLoginSuccess }: LoginProps,
 
 
 function Login({ onLoginSuccess, goToRegister}: LoginProps): React.JSX.Element {
+
+
   return (
     
     <div

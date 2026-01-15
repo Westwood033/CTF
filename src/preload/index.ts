@@ -13,7 +13,10 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld("api", {
       getUserByPseudoAndByPassword: (pseudo: string, password: string) => ipcRenderer.invoke("get-user-by-pseudo-and-password", pseudo, password),
       createUser: (pseudo: string, password: string) => ipcRenderer.invoke("create-user", pseudo, password),
-      openDevTool: () => ipcRenderer.invoke("open-dev-tool")
+      openDevTool: () => ipcRenderer.invoke("open-dev-tool"),
+      verify: (flag: string, id: number) => ipcRenderer.invoke("verify", flag, id),
+      getFlagByNumber: (id: number) => ipcRenderer.invoke("get-flag-by-number", id),
+      confirmFlag: (id: number, flag: string) => ipcRenderer.invoke("confirm", id, flag)
     });
   } catch (error) {
     console.error(error)

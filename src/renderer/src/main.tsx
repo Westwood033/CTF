@@ -4,11 +4,12 @@ import App from './App'
 import Login from './Login'
 import Register from './Register'
 import Morpion from './Morpion'
+import Flag from './Flag'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function Root() {
-  const [page, setPage] = useState<'login' | 'app' | 'register' | 'morpion'>('login')
+  const [page, setPage] = useState<'login' | 'app' | 'register' | 'morpion' | 'flag'>('login')
 
   const handleLoginSuccess = () => {
     setPage('app')
@@ -26,12 +27,18 @@ function Root() {
     setPage('morpion')
   }
 
+  const handleChangeToFlag = () => {
+    setPage('flag')
+  }
+
+
   return (
     <>
       {page === 'login' && <Login onLoginSuccess={handleLoginSuccess} goToRegister={handleChangeToRegister} />}
-      {page === 'app' && <App goToMorpion={handleChangeToMorpion} />}
+      {page === 'app' && <App goToMorpion={handleChangeToMorpion} goToFlagList={handleChangeToFlag}/>}
       {page === 'register' && <Register goToLogin={handleChangeToLogin} />}
       {page === 'morpion' && <Morpion goToApp={handleLoginSuccess}/>}
+      {page === 'flag' && <Flag goToApp={handleLoginSuccess}/>}
     </>
   )
 }
