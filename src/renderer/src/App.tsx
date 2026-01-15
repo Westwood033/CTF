@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 type AppProps = {
   goToMorpion: () => void;
@@ -23,14 +23,12 @@ function App({ goToMorpion, goToFlagList, currentUser }: AppProps): React.JSX.El
       const flagFromDB1 = await window.api.getFlagByNumber(1);
       const flagFromDB2 = await window.api.getFlagByNumber(2);
 
-      // root et flag 1 manquant
       if (currentUser?.pseudo === "root" && !flagFromDB1) {
         const parts = [54, 86, 65, 109, 118, 53, 67, 66, 49, 119, 81, 101, 66, 76, 78, 90];
         const message = parts.map((c) => String.fromCharCode(c)).join("");
         setModalMessage(`Tu es l'admin ?\n${message}`);
         setShowModal(true);
-      }
-      // non-root et flag 2 manquant
+      } 
       else if (currentUser?.pseudo !== "root" && !flagFromDB2) {
         const parts = [78, 55, 97, 81, 120, 80, 50, 76, 109, 57, 90, 75, 99, 82, 56, 68];
         const message = parts.map((c) => String.fromCharCode(c)).join("");
@@ -56,84 +54,68 @@ function App({ goToMorpion, goToFlagList, currentUser }: AppProps): React.JSX.El
   ];
 
   return (
-    <div style={styles.page}>
+    <div className="container-fluid p-4">
+
+      {/* Bouton */}
       <button
-        className="btn btn-primary position-absolute"
-        style={{ top: "1rem", right: "1rem", zIndex: 10 }}
+        className="btn btn-primary position-absolute top-0 end-0 m-3"
         onClick={() => goToFlagList()}
       >
         Remplis tes drapeaux
       </button>
 
-      <h1 style={{ textAlign: "center" }}>Mini-jeux</h1>
+      <h1 className="text-center mb-4">Mini-jeux</h1>
 
-      <div style={styles.grid}>
-        {cards.map(card => (
-          <div
-            key={card.id}
-            style={styles.card}
-            onClick={() => goToPage({ goToMorpion, goToFlagList, currentUser }, card.id)}
-          >
-            <img src={card.img} alt={card.title} style={styles.image} />
-            <h3 style={styles.title}>{card.title}</h3>
-            <p style={styles.description}>{card.desc}</p>
+      {/* Grille */}
+      <div className="row g-4">
+        {cards.map((card) => (
+          <div key={card.id} className="col-12 col-sm-6 col-md-4 col-lg-2">
+            <div
+              className="card h-100 shadow text-center"
+              role="button"
+              onClick={() =>
+                goToPage({ goToMorpion, goToFlagList, currentUser }, card.id)
+              }
+            >
+              <img
+                src={card.img}
+                alt={card.title}
+                className="card-img-top rounded"
+              />
+
+              <div className="card-body p-2">
+                <h5 className="card-title mb-1">{card.title}</h5>
+                <p className="card-text text-muted small">
+                  {card.desc}
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
 
       {/* MODAL */}
       {showModal && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
-             <p
-              style={{
-                background: "#f4f4f4",
-                padding: "10px",
-                borderRadius: "6px",
-                fontFamily: "monospace",
-                wordBreak: "break-all",
-                whiteSpace: "pre-line",
-              }}
-            >
+        <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
+          <div className="bg-white text-dark p-4 rounded-3 shadow-lg text-center" style={{ width: 320 }}>
+            
+            <p className="bg-light p-2 rounded font-monospace text-break" style={{ whiteSpace: "pre-line" }}>
               {modalMessage}
             </p>
-            <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
+
+            <button
+              className="btn btn-secondary mt-2"
+              onClick={() => setShowModal(false)}
+            >
               Fermer
             </button>
+
           </div>
         </div>
       )}
+
     </div>
   );
 }
-
-const styles = {
-  page: { padding: "20px", fontFamily: "Arial, sans-serif" },
-  grid: { display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "20px" },
-  card: { background: "#fff", borderRadius: "10px", padding: "10px", boxShadow: "0 2px 8px rgba(0,0,0,0.15)", textAlign: "center" },
-  image: { width: "100%", borderRadius: "8px", marginBottom: "10px" },
-  title: { margin: "8px 0 4px 0" },
-  description: { fontSize: "14px", color: "#555" },
-} as const;
-
-const overlayStyle: React.CSSProperties = {
-  position: "fixed",
-  inset: 0,
-  background: "rgba(0,0,0,0.5)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 999,
-};
-
-const modalStyle: React.CSSProperties = {
-  background: "#fff",
-  color: "#222",
-  padding: "25px",
-  borderRadius: "12px",
-  width: "320px",
-  textAlign: "center",
-  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-};
 
 export default App;

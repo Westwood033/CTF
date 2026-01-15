@@ -18,21 +18,19 @@ function Flag({ goToApp }: FlagProps): React.JSX.Element {
   ];
 
   useEffect(() => {
-  const loadFlags = async () => {
-    const results: { [id: number]: string } = {};
-    for (const flagLine of flags) {
-      const flagFromDB = await window.api.getFlagByNumber(flagLine.id);
-      if (flagFromDB) {
-        results[flagLine.id] = flagFromDB.flag;
+    const loadFlags = async () => {
+      const results: { [id: number]: string } = {};
+      for (const flagLine of flags) {
+        const flagFromDB = await window.api.getFlagByNumber(flagLine.id);
+        if (flagFromDB) {
+          results[flagLine.id] = flagFromDB.flag;
+        }
       }
-    }
+      setSuccessRows(results);
+    };
 
-    setSuccessRows(results);
-  };
-
-  loadFlags();
-}, []);
-
+    loadFlags();
+  }, []);
 
   const saveFile = async (id: number) => {
     const textValue = inputs[id] || "";
@@ -44,13 +42,8 @@ function Flag({ goToApp }: FlagProps): React.JSX.Element {
       return;
     }
 
-    const test = await window.api.confirmFlag(id, textValue);
-    console.log(test)
+    await window.api.confirmFlag(id, textValue);
 
-    const check = await window.api.getFlagByNumber(id);
-    console.log("Check after save:", check);
-
-    // ✔️ Mise à jour UI
     setSuccessRows((prev) => ({
       ...prev,
       [id]: textValue,
@@ -59,14 +52,15 @@ function Flag({ goToApp }: FlagProps): React.JSX.Element {
     setModalMessage("Bravo");
     setShowModal(true);
 
-    // reset input de cette ligne
     setInputs((prev) => ({ ...prev, [id]: "" }));
   };
 
   return (
-    <div className="text-body d-flex justify-content-center align-items-center vh-100 w-100">
+    <div className="d-flex justify-content-center align-items-center vh-100 w-100 position-relative">
+
+      {/* Table */}
       <table className="table table-bordered w-75 text-center align-middle">
-        <thead>
+        <thead className="table-light">
           <tr>
             <th>Drapeau</th>
             <th>Description</th>
@@ -80,35 +74,35 @@ function Flag({ goToApp }: FlagProps): React.JSX.Element {
 
             return (
               <tr key={flag.id}>
-                <td className="d-flex flex-row align-items-center gap-2">
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={inputs[flag.id] || ""}
-                    placeholder={validatedFlag || ""}
-                    onChange={(e) =>
-                      setInputs((prev) => ({ ...prev, [flag.id]: e.target.value }))
-                    }
-                    disabled={!!validatedFlag}
-                  />
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => saveFile(flag.id)}
-                    disabled={!!validatedFlag}
-                  >
-                    Valider
-                  </button>
+                <td>
+                  <div className="d-flex align-items-center gap-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={inputs[flag.id] || ""}
+                      placeholder={validatedFlag || ""}
+                      onChange={(e) =>
+                        setInputs((prev) => ({
+                          ...prev,
+                          [flag.id]: e.target.value,
+                        }))
+                      }
+                      disabled={!!validatedFlag}
+                    />
+
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => saveFile(flag.id)}
+                      disabled={!!validatedFlag}
+                    >
+                      Valider
+                    </button>
+                  </div>
                 </td>
 
                 <td>{flag.desc}</td>
 
-                <td
-                  style={{
-                    fontSize: "1.5rem",
-                    backgroundColor: validatedFlag ? "green" : "red",
-                    color: "#fff",
-                  }}
-                >
+                <td className={validatedFlag ? "bg-success text-white fs-4" : "bg-danger text-white fs-4"}>
                   {validatedFlag ? "✓" : ""}
                 </td>
               </tr>
@@ -119,49 +113,31 @@ function Flag({ goToApp }: FlagProps): React.JSX.Element {
 
       {/* Bouton retour */}
       <button
-        className="btn btn-primary position-absolute"
-        style={{ top: "1rem", left: "1rem", zIndex: 10 }}
+        className="btn btn-primary position-absolute top-0 start-0 m-3"
         onClick={() => goToApp()}
       >
         Retour
       </button>
 
-      {/* ⭐ POPUP */}
+      {/* MODAL */}
       {showModal && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
-            <h2>{modalMessage}</h2>
-            <div style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}>
-              <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
-                Fermer
-              </button>
-            </div>
+        <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
+          <div className="bg-white text-dark p-4 rounded-3 shadow-lg text-center" style={{ width: 320 }}>
+            
+            <h2 className="mb-3">{modalMessage}</h2>
+
+            <button
+              className="btn btn-secondary"
+              onClick={() => setShowModal(false)}
+            >
+              Fermer
+            </button>
+
           </div>
         </div>
       )}
     </div>
   );
 }
-
-/* Styles de la popup */
-const overlayStyle: React.CSSProperties = {
-  position: "fixed",
-  inset: 0,
-  background: "rgba(0,0,0,0.5)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 999,
-};
-
-const modalStyle: React.CSSProperties = {
-  background: "#fff",
-  color: "#222",
-  padding: "25px",
-  borderRadius: "12px",
-  width: "320px",
-  textAlign: "center",
-  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-};
 
 export default Flag;

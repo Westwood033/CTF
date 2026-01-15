@@ -27,7 +27,6 @@ function Login({ onLoginSuccess, goToRegister}: LoginProps): React.JSX.Element {
       className="d-flex vh-100 w-100 align-items-center justify-content-center">
       <form
         className="d-flex flex-column text-center border rounded p-5 bg-dark"
-        style={{ minWidth: "350px" }}
         onSubmit={(e) => {
           e.preventDefault();
           const form = e.target as HTMLFormElement;

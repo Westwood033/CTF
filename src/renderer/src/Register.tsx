@@ -45,7 +45,6 @@ function Register({ goToLogin }: RegisterProps): React.JSX.Element {
       <div className="container-fluid p-0 m-0 h-100 d-flex">
         <form
           className="w-50 h-100 d-flex flex-column text-center border-end justify-content-center align-items-center bg-dark"
-          style={{ minWidth: "350px" }}
           onSubmit={(e) => {
             e.preventDefault();
             const form = e.target as HTMLFormElement;
