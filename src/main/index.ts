@@ -18,7 +18,7 @@ function createWindow(): void {
       nodeIntegration: false,
       contextIsolation: true,
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false // a mettre en true en prod
+      sandbox: true // a mettre en true en prod
     }
   })
 
@@ -102,5 +102,12 @@ ipcMain.handle("confirm",(event, id: number, flag: string) => {
 ipcMain.handle("get-flag-by-number",(event, id: number) => {
   const f = getFlagByNumber(id);
   return f;
+});
+
+ipcMain.handle("close-dev-tool", () => {
+  const window = BrowserWindow.getFocusedWindow();
+  if (window) {
+    window.webContents.closeDevTools();
+  }
 });
 

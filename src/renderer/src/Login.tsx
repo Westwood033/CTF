@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 type LoginProps = {
-  onLoginSuccess: () => void;
+  onLoginSuccess: (user : User) => void;
   goToRegister: () => void;
 };
 
@@ -10,7 +10,7 @@ function checkLogin({ onLoginSuccess }: LoginProps,
 
   window.api.getUserByPseudoAndByPassword(pseudo, password).then((user: User | undefined) => {
     if(user){
-        onLoginSuccess();
+        onLoginSuccess(user);
     } else {
       alert("Identifiant ou mot de passe incorrect");
     }

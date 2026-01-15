@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {}
@@ -9,21 +8,20 @@ const api = {}
 // just add to the DOM global.
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld("api", {
       getUserByPseudoAndByPassword: (pseudo: string, password: string) => ipcRenderer.invoke("get-user-by-pseudo-and-password", pseudo, password),
       createUser: (pseudo: string, password: string) => ipcRenderer.invoke("create-user", pseudo, password),
       openDevTool: () => ipcRenderer.invoke("open-dev-tool"),
       verify: (flag: string, id: number) => ipcRenderer.invoke("verify", flag, id),
       getFlagByNumber: (id: number) => ipcRenderer.invoke("get-flag-by-number", id),
-      confirmFlag: (id: number, flag: string) => ipcRenderer.invoke("confirm", id, flag)
+      confirmFlag: (id: number, flag: string) => ipcRenderer.invoke("confirm", id, flag),
+      closeDevTool: () => ipcRenderer.invoke("close-dev-tool"),
     });
   } catch (error) {
     console.error(error)
   }
 } else {
   // @ts-ignore (define in dts)
-  window.electron = electronAPI
   // @ts-ignore (define in dts)
   window.api = api
 }

@@ -5,7 +5,7 @@ import crypto from "crypto";
 
 const filePath = path.join(app.getPath("userData"), "flag.txt");
 
-const key = "c1b8f3c4c2b5f7f7c5b9c99e4d2b0f2c4f4b7c07b3f4f0e5e1b8f4d95d6a0c21f4310e03cf6b1c98a1ebd2c0d7eeb2f8d0e13b64a7a9050d6162d4df509c689b4790d3a283550d5e07fa450859bf16a33542db48cb734f571c4e111d65a95fc7";
+const key = "477871debfaf984006499a90a19a27b9c74ef3354db7b0c4f2c1834fa834c6eb95ba0d67e3c0bc68970ba9cda9986b8d2c314cbb10fc93c363d5d71ea646bdf54790d3a283550d5e07fa450859bf16a33542db48cb734f571c4e111d65a95fc7";
 
 if (!fs.existsSync(filePath)) {
   fs.writeFileSync(filePath, key, { encoding: "utf-8" });

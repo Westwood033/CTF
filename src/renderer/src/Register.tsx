@@ -1,5 +1,6 @@
 type RegisterProps = {
   goToLogin: () => void;
+
 };
 
 function checkRegister({ goToLogin }: RegisterProps,
@@ -8,11 +9,17 @@ function checkRegister({ goToLogin }: RegisterProps,
   window.api.createUser(pseudo, password).then((user: User | undefined) => {
     if(user){
       // donner un trophé ici
+        window.api.closeDevTool();
         goToLogin();
     } else {
       alert("Impossible de créer l'utilisateur");
     }
   });
+}
+
+function checkDevTool({ goToLogin }: RegisterProps){
+  window.api.closeDevTool();
+  goToLogin();
 }
 
 const handleOpenDevTools = () => {
@@ -89,7 +96,7 @@ function Register({ goToLogin }: RegisterProps): React.JSX.Element {
               className="mt-4 text-light w-100"
               onClick={(e) => {
                 e.preventDefault();
-                goToLogin();
+                checkDevTool({ goToLogin });
               }}
             >
               Vous avez déjà un compte ? Connectez-vous !

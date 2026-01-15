@@ -4,6 +4,7 @@ interface Window {
     getUserByPseudoAndByPassword: (pseudo: string, password: string) => Promise<User | undefined>;
     createUser: (pseudo: string, password: string) => Promise<User>;
     openDevTool: () => Promise<>;
+    closeDevTool: () => Promise<>;
     getFlagByNumber: (id: number) => Promise<Flag | undefined>;
     confirmFlag: (id: number, flag: string) => Promise<Flag>;
   };

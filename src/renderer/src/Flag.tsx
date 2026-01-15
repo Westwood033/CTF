@@ -12,21 +12,13 @@ function Flag({ goToApp }: FlagProps): React.JSX.Element {
 
   const flags = [
     { id: 1, desc: "Tu es l'admin ?" },
-    { id: 2, desc: "Bonjour nouveau participant" },
+    { id: 2, desc: "T'es nouveau ici ?" },
     { id: 3, desc: "Gagne contre le morpion" },
     { id: 4, desc: "Disponible le 19 mars 2026" },
-    { id: 5, desc: "Le puit n'existe pas" },
-    { id: 6, desc: "df" },
-    { id: 7, desc: "Trouve la bonne combinaison" },
-    { id: 8, desc: "Es-tu un dieu ?" },
-    { id: 9, desc: "Description de la card 9" },
-    { id: 10, desc: "Clique sur les ronds qui apparaissent" },
   ];
 
   useEffect(() => {
-     console.log("useEffect chargé");
   const loadFlags = async () => {
-     console.log("load chargé");
     const results: { [id: number]: string } = {};
     for (const flagLine of flags) {
       const flagFromDB = await window.api.getFlagByNumber(flagLine.id);
