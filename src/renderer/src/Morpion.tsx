@@ -6,7 +6,6 @@ type MorpionProps = {
 
 function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
 
-  // ⭐ POPUP STATE
   const [showModal, setShowModal] = useState(false);
   const [flag, setFlag] = useState("");
 
@@ -128,9 +127,20 @@ function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
           const f = getFlag();
           setFlag(`Gagne contre le morpion : ${f}`);
           setShowModal(true);
+
+          return [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1],
+        ];
         } else {
           setFlag("L'IA a gagné");
-          setShowModal(true);
+        setShowModal(true);
+          return [
+            [2, 2, 2],
+            [2, 2, 2],
+            [2, 2, 2],
+        ];
         }
       } else {
         setPlayer(player === 1 ? 2 : 1);
@@ -178,7 +188,7 @@ function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
           row.map((cell, j) => (
             <div
               key={`${i}-${j}`}
-              onClick={() => play(i, j)}
+              onClick={player === 2 ? undefined : () => play(i, j)}
               style={{
                 width: "100px",
                 height: "100px",
