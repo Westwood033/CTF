@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
+import {clean, multiply} from "./../../main/logicMorpion";
 
 type MorpionProps = {
   goToApp: () => void;
 };
+
+function checkWin(newGrid: Array<Array<number>>, player: number){
+    console.log(newGrid);
+    return multiply(clean(newGrid, player), player);
+}
 
 function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
   const [showModal, setShowModal] = useState(false);
@@ -12,9 +18,8 @@ function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
     [0, 0, 0],
     [0, 0, 0],
   ]);
-  const [player, setPlayer] = useState(1); // 1 = X, 2 = O
+  const [player, setPlayer] = useState(1);
 
-  // IA automatique
   useEffect(() => {
     if (player !== 2 || showModal) return;
 
@@ -36,72 +41,6 @@ function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
     return () => clearTimeout(timer);
   }, [grille, player, showModal]);
 
-  // Vérification victoire
-  const verify = (g, num) => {
-    let cpt = 0;
-    for (let l = 0; l < g.length; l++) {
-      for (let k = 0; k < g[l].length; k++) {
-        if (g[l][k] === num) cpt += num;
-      }
-    }
-    return cpt === 3 || cpt === 6;
-  };
-
-  const multiply = (g, num) => {
-    const grilles = [
-      [
-        [0, 0, 0],
-        [1, 1, 1],
-        [0, 0, 0],
-      ],
-      [
-        [1, 1, 1],
-        [0, 0, 0],
-        [0, 0, 0],
-      ],
-      [
-        [0, 0, 0],
-        [0, 0, 0],
-        [1, 1, 1],
-      ],
-      [
-        [1, 0, 0],
-        [1, 0, 0],
-        [1, 0, 0],
-      ],
-      [
-        [0, 1, 0],
-        [0, 1, 0],
-        [0, 1, 0],
-      ],
-      [
-        [0, 0, 1],
-        [0, 0, 1],
-        [0, 0, 1],
-      ],
-      [
-        [1, 0, 0],
-        [0, 1, 0],
-        [0, 0, 1],
-      ],
-      [
-        [0, 0, 1],
-        [0, 1, 0],
-        [1, 0, 0],
-      ],
-    ];
-
-    for (let model of grilles) {
-      const newGrid = model.map((row, i) =>
-        row.map((cell, j) => cell * g[i][j])
-      );
-      if (verify(newGrid, num)) return true;
-    }
-    return false;
-  };
-
-  const clean = (g, num) =>
-    g.map((row) => row.map((cell) => (cell === num ? cell : 0)));
 
   function getFlag() {
     const parts = [113, 118, 98, 105, 66, 104, 87, 79, 112, 105, 68, 67, 50, 66, 104, 109];
@@ -115,7 +54,7 @@ function Morpion({ goToApp }: MorpionProps): React.JSX.Element {
       const newGrid = prev.map((row) => [...row]);
       newGrid[i][j] = player;
 
-      if (multiply(clean(newGrid, player), player)) {
+      if (checkWin(newGrid, player)) {
         if (player === 1) {
           const f = getFlag();
           setFlag(`Gagne contre le morpion : ${f}`);

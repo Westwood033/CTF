@@ -42,15 +42,6 @@ function App({ goToMorpion, goToFlagList, currentUser }: AppProps): React.JSX.El
 
   const cards = [
     { id: 1, title: "Morpion", desc: "Rond contre croix, fait une ligne de trois", img: "./../src/assets/morpion.png" },
-    { id: 2, title: "Puissance 4", desc: "Bleu contre rouge, fait une ligne de 4", img: "./../src/assets/puissance4.png" },
-    { id: 3, title: "Démineur", desc: "Ne tombe pas sur la bombe", img: "https://picsum.photos/300?3" },
-    { id: 4, title: "Jeu du pendu", desc: "Trouve le mot avec un nombre limité de coups", img: "https://picsum.photos/300?4" },
-    { id: 5, title: "Pierre - Feuille - Ciseaux", desc: "Le puit n'existe pas", img: "https://picsum.photos/300?5" },
-    { id: 6, title: "2048", desc: "", img: "https://picsum.photos/300?6" },
-    { id: 7, title: "Sudoku", desc: "Trouve la bonne combinaison", img: "https://picsum.photos/300?7" },
-    { id: 8, title: "Jeu de la vie", desc: "Es-tu un dieu ?", img: "https://picsum.photos/300?8" },
-    { id: 9, title: "Devine le film", desc: "Description de la card 9", img: "https://picsum.photos/300?9" },
-    { id: 10, title: "Reflex master", desc: "Clque sur les ronds qui apparaissent", img: "https://picsum.photos/300?10" },
   ];
 
   return (

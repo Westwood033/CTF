@@ -18,7 +18,7 @@ function createWindow(): void {
       nodeIntegration: false,
       contextIsolation: true,
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: true // a mettre en true en prod
+      sandbox: true
     }
   })
 

@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
+import { multiply, verifyScore } from '../main/logicMorpion';
 
 // Custom APIs for renderer
 const api = {}

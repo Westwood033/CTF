@@ -14,7 +14,6 @@ function Flag({ goToApp }: FlagProps): React.JSX.Element {
     { id: 1, desc: "Tu es l'admin ?" },
     { id: 2, desc: "T'es nouveau ici ?" },
     { id: 3, desc: "Gagne contre le morpion" },
-    { id: 4, desc: "Disponible le 19 mars 2026" },
   ];
 
   useEffect(() => {
