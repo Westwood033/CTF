@@ -6,14 +6,17 @@ import Register from './Register'
 import Morpion from './Morpion'
 import Flag from './Flag'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import type { User } from "./../../global"
 
 
 function Root() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [page, setPage] = useState<'login' | 'app' | 'register' | 'morpion' | 'flag'>('login')
 
-  const handleLoginSuccess = (user: User) => {
-    setCurrentUser(user); 
+  const handleLoginSuccess = (user?: User) => {
+    if(user){
+      setCurrentUser(user);
+    } 
     setPage('app')
   }
 

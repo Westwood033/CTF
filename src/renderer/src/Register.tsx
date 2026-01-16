@@ -1,3 +1,6 @@
+import type { User } from "./../../global"
+
+
 type RegisterProps = {
   goToLogin: () => void;
 

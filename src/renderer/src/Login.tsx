@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import type { User } from "./../../global"
+
 
 type LoginProps = {
-  onLoginSuccess: (user : User) => void;
+  onLoginSuccess: (user? : User) => void;
   goToRegister: () => void;
 };
 
@@ -32,7 +33,7 @@ function Login({ onLoginSuccess, goToRegister}: LoginProps): React.JSX.Element {
           const form = e.target as HTMLFormElement;
           const pseudo = (form.elements.namedItem("identifiant") as HTMLInputElement).value;
           const password = (form.elements.namedItem("motDePasse") as HTMLInputElement).value;
-          checkLogin({ onLoginSuccess }, { pseudo, password });
+          checkLogin({onLoginSuccess, goToRegister}, { pseudo, password });
         }}
       >
         <h3 className="mb-3 text-light">Connexion</h3>

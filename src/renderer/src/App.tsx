@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import type { User } from "./../../global"
+
 
 type AppProps = {
   goToMorpion: () => void;

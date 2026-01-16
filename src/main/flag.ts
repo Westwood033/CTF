@@ -1,5 +1,5 @@
 import db from "./db";
-import Flag from "../global"
+import type { Flag } from "../global"
 
 
 export function confirmFlag(number: number, flag: string): Flag {

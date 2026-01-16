@@ -26,7 +26,7 @@ function createWindow(): void {
     mainWindow.show()
   })
 
-  ipcMain.handle("open-dev-tool", (event) => {
+  ipcMain.handle("open-dev-tool", (_event) => {
     mainWindow.webContents.openDevTools();
 });
 
@@ -79,27 +79,27 @@ app.on('window-all-closed', () => {
   }
 })
 
-ipcMain.handle("get-user-by-pseudo-and-password", (event, pseudo: string, password: string) => {
+ipcMain.handle("get-user-by-pseudo-and-password", (_event, pseudo: string, password: string) => {
   const user = getUserByPseudoAndPassword(pseudo, password);
   return user;
 });
 
-ipcMain.handle("create-user", (event, pseudo: string, password: string) => {
+ipcMain.handle("create-user", (_event, pseudo: string, password: string) => {
   const user = createUser(pseudo, password);
   return user;
 });
 
-ipcMain.handle("verify",(event, flag: string, id: number) => {
+ipcMain.handle("verify",(_event, flag: string, id: number) => {
   const v = verify(flag, id);
   return v;
 });
 
-ipcMain.handle("confirm",(event, id: number, flag: string) => {
+ipcMain.handle("confirm",(_event, id: number, flag: string) => {
   const c = confirmFlag(id, flag);
   return c;
 });
 
-ipcMain.handle("get-flag-by-number",(event, id: number) => {
+ipcMain.handle("get-flag-by-number",(_event, id: number) => {
   const f = getFlagByNumber(id);
   return f;
 });

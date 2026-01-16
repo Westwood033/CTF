@@ -1,5 +1,5 @@
 import db from "./db";
-import User from "./../global"
+import type { User } from "../global"
 
 export function createUser(pseudo: string, password: string): User {
   const stmt = db.prepare(`
@@ -21,5 +21,6 @@ export function getUserByPseudoAndPassword(pseudo: string, password: string): Us
     const stmt = db.prepare(`SELECT * FROM users WHERE pseudo = '${pseudo}' and password = '${password}'`); // utiliser stmin.get(pseudo, password) jection sql
     return stmt.get() as User | undefined;
   }
+  return undefined;
 }
 

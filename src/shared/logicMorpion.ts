@@ -64,3 +64,5 @@ export function multiply(g: Array<Array<number>>, num: number){
   export function clean(g: Array<Array<number>>, num: number){
     return g.map((row) => row.map((cell) => (cell === num ? cell : 0)));
   }
+
+  

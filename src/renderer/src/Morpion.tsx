@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import {clean, multiply} from "./../../main/logicMorpion";
+import {clean, multiply} from "./../../shared/logicMorpion"
 
 type MorpionProps = {
   goToApp: () => void;
 };
 
 function checkWin(newGrid: Array<Array<number>>, player: number){
-    console.log(newGrid);
     return multiply(clean(newGrid, player), player);
 }
 

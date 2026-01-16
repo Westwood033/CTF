@@ -1,5 +1,13 @@
-interface Window {
-  api: {
+export {}
+
+declare global {
+  interface Window {
+     electron: {
+      process: {
+        versions: NodeJS.ProcessVersions
+      }
+    }
+   api: {
     verify(text: string, id: number): boolean;
     getUserByPseudoAndByPassword: (pseudo: string, password: string) => Promise<User | undefined>;
     createUser: (pseudo: string, password: string) => Promise<User>;
@@ -9,15 +17,17 @@ interface Window {
     confirmFlag: (id: number, flag: string) => Promise<Flag>;
   };
 }
+}
 
-interface User {
+export interface User {
   id: number;
   pseudo: string;
   password: string;
 }
 
-interface Flag {
+export interface Flag {
   id: number;
   number: number;
   flag: string;
 }
+
