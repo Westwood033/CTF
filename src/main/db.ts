@@ -28,7 +28,7 @@ db.prepare(`
 const rootExists = db.prepare("SELECT * FROM users WHERE pseudo = ?").get("root");
 
 if (!rootExists) {
-  db.prepare("INSERT INTO users (pseudo, password) VALUES (?, ?)").run("root", "root");
+  db.prepare("INSERT INTO users (pseudo, password) VALUES (?, ?)").run("root", "spdvnjsorinvdkvnzoeNSIDUBFEUSZDVSDOINJENAQQERRRIozinsv");
   console.log("Utilisateur root créé !");
 } else {
   console.log("Utilisateur root déjà existant.");
