@@ -8,6 +8,11 @@ An Electron application with React and TypeScript
 
 ## Project Setup
 
+### Request
+
+npm or yarn
+git
+
 ### Install
 
 ```bash
@@ -33,3 +38,15 @@ $ npm run build:mac
 $ npm run build:linux
 ```
 # CTF
+
+## Description : 
+Try to find all flag into the app. The app is a mix of some mini-game like Morpion
+Number of flag : 4
+Mini-game : 1
+
+## Knowledge needed :
+Sql
+Bootstrap
+
+
+
